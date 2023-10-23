@@ -26,6 +26,7 @@ export const useAuthentication = () => {
     }
   }
 
+  // register
   const createUser = async (data) => {
     checkIfIsCancelled();
 
@@ -47,9 +48,6 @@ export const useAuthentication = () => {
 
       return user;
     } catch (error) {
-      console.log(error.message);
-      console.log(typeof error.message);
-
       let systemErrorMessage;
 
       if (error.message.includes("Password")) {
@@ -65,6 +63,40 @@ export const useAuthentication = () => {
     }
   };
 
+  // logout - sign out
+  const logout = () => {
+    checkIfIsCancelled();
+
+    signOut(auth);
+  };
+
+  // login - sign in
+  const login = async (data) => {
+    checkIfIsCancelled();
+
+    setLoading(true);
+    setError(false);
+
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      setLoading(false);
+    } catch (error) {
+      let systemErrorMessage;
+
+      if (error.message.includes("invalid-login-credentials")) {
+        systemErrorMessage = "Usuário ou senha não encontrado.";
+      } else if (error.message.includes("too-many-requests")) {
+        systemErrorMessage =
+          "Acesso do usuário bloqueado devido a muitas tentativas";
+      } else {
+        systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde";
+      }
+
+      setError(systemErrorMessage);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     return () => setCancelled(true);
   }, []);
@@ -74,5 +106,7 @@ export const useAuthentication = () => {
     createUser,
     error,
     loading,
+    logout,
+    login,
   };
 };

@@ -1,6 +1,6 @@
-import { useAuthentication } from "../../hooks/useAuthentication";
 import styles from "./Register.module.css";
 
+import { useAuthentication } from "../../hooks/useAuthentication";
 import { useState, useEffect } from "react";
 
 const Register = () => {
@@ -37,7 +37,7 @@ const Register = () => {
     if (authError) {
       setError(authError);
     }
-  }, authError);
+  }, [authError]);
 
   return (
     <div className={styles.register}>
