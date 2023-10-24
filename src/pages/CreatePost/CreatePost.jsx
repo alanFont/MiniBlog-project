@@ -15,7 +15,6 @@ const CreatePost = () => {
   const { user } = useAuthValue();
 
   const { insertDocument, response } = useInsertDocument("posts");
-  console.log(response);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +25,6 @@ const CreatePost = () => {
     // create tags array
 
     // check all values
-    console.log(title, image, body, tags);
     await insertDocument({
       title: title,
       image: image,
