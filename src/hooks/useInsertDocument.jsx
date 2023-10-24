@@ -8,10 +8,11 @@ const initialState = {
 };
 
 const insertReducer = (state, action) => {
+  console.log(state, action);
   switch (action.type) {
     case "LOADING":
       return { loading: true, error: null };
-    case "INSERTED_DOCC":
+    case "INSERTED_DOC":
       return { loading: false, error: null };
     case "ERROR":
       return { loading: false, error: action.payload };
